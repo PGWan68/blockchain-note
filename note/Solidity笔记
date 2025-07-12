@@ -1,0 +1,46 @@
+
+## 事件
+- event: 申明事件。event Deposit(address _from, uint _value); 
+- emit: 触发事件。 emit Deposit(msg.sender, value);
+- indexed: 索引事件，可以用于搜索。
+
+
+## 异常处理
+
+### 检查异常
+    - require: 检查条件，如果条件不满足，则抛出异常。require(age >= 18, "只有18岁以上才卡一投票");
+    - revert: 抛出异常。
+    - assert: 检查条件，如果条件不满足，则抛出异常。 assert(!success);
+
+### 捕获异常
+    - try/catch: 捕获异常。
+    - try/catch/finally: 捕获异常，并执行一些清理操作。
+
+
+
+## 函数
+
+### 继承
+    - is ： 继承某合约
+    - abstract： 表示该合约不可被部署
+    - super：调用父合约函数
+    - virtual： 表示函数可以被重写
+    - override： 表示重写了父合约函数
+
+### 函数修饰符
+
+#### 可见性修饰符
+- private ：只能被合约内部调用
+- internal ：就像 private ，但是也能被继承的合约调用
+- external ：只能从合约外部调用
+- public ：可以在任何地方调用，不管是内部还是外部
+
+#### 状态修饰符
+- view ：不会更改和保存任何数据
+- pure ：不但不会往区块链写数据，它甚至不从区块链读取数据
+- 这两种在被从合约外部调用的时候都不花费任何gas（但是它们在被内部其他函数调用的时候将会耗费gas）
+
+
+#### 自定义修饰符
+- modifiers
+- payable
