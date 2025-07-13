@@ -4,7 +4,7 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("@nomicfoundation/hardhat-verify");
 
-const {ALCHEMY_API_URL, SEPOLIA_PRIVATE_KEY, ETHERSCAN_API_KEY} = process.env;
+const {ALCHEMY_API_URL, SEPOLIA_PRIVATE_KEY1, SEPOLIA_PRIVATE_KEY2, ETHERSCAN_API_KEY} = process.env;
 
 module.exports = {
   solidity: "0.8.28",
@@ -13,7 +13,7 @@ module.exports = {
   networks: {
     sepolia: {
       url: ALCHEMY_API_URL,
-      accounts: [SEPOLIA_PRIVATE_KEY],
+      accounts: [SEPOLIA_PRIVATE_KEY1, SEPOLIA_PRIVATE_KEY2],
       chainId: 11155111,
     }
   },

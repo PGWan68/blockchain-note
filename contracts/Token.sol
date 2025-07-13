@@ -15,8 +15,6 @@ contract Token{
         balances[msg.sender] = totalSupply;
     }
 
-
-
     function balanceOf(address account) view external returns(uint256){
         return balances[account];
     }
