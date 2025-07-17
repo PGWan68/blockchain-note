@@ -15,7 +15,7 @@ contract FundMe{
     // 100w USD
     uint256 TARGET_VALUE = 10**6 * 10 ** 10;
 
-    address owner;
+    address public owner;
 
     uint256 lockTimestamp;
     uint256 deploymentTimestamp;

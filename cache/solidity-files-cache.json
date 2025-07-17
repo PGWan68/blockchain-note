@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/PGWan/Documents/Repository/BlockChianNote/contracts/FundMe.sol": {
-      "lastModificationDate": 1752388978472,
-      "contentHash": "267e9834f86823186a630f779694f14a",
+      "lastModificationDate": 1752724623963,
+      "contentHash": "a50d3efcb33129c009d97ca9f05053d9",
       "sourceName": "contracts/FundMe.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -20,12 +20,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -37,42 +44,6 @@
       ],
       "artifacts": [
         "FundMe"
-      ]
-    },
-    "/Users/PGWan/Documents/Repository/BlockChianNote/contracts/Token.sol": {
-      "lastModificationDate": 1752382517619,
-      "contentHash": "cda7327e2f9add53b9ad12d4aac15bc6",
-      "sourceName": "contracts/Token.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.28"
-      ],
-      "artifacts": [
-        "Token"
       ]
     },
     "/Users/PGWan/Documents/Repository/BlockChianNote/node_modules/@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": {
@@ -94,12 +65,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
