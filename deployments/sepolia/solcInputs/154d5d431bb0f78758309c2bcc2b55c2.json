@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\n// solhint-disable-next-line interface-starts-with-i\ninterface AggregatorV3Interface {\n  function decimals() external view returns (uint8);\n\n  function description() external view returns (string memory);\n\n  function version() external view returns (uint256);\n\n  function getRoundData(\n    uint80 _roundId\n  ) external view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\n\n  function latestRoundData()\n    external\n    view\n    returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\n}\n"
+    },
+    "contracts/FundMe.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity >=0.8.0;\n\nimport {AggregatorV3Interface} from \"@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol\";\n\ncontract FundMe{\n\n    mapping (address=>uint256) public fundersToAmount;\n\n    AggregatorV3Interface internal dataFeed;\n\n    // 10 USD\n    uint256 MINIMUM_VALUE = 1 * 10 ** 18;\n\n    // 100w USD\n    uint256 TARGET_VALUE = 10**6 * 10 ** 10;\n\n    address public owner;\n\n    uint256 lockTimestamp;\n    uint256 deploymentTimestamp;\n\n    constructor(uint256 _lockTime, address dataFeedAddr){\n        dataFeed = AggregatorV3Interface(dataFeedAddr);\n        owner = msg.sender;\n        lockTimestamp = _lockTime;\n        deploymentTimestamp = block.timestamp;\n    }\n\n    // 存款\n    // 存入资金大于最小存入额\n    // 时间要在存款周期内\n    function fund() external payable {\n        require(convertEthToUsd(msg.value) >= MINIMUM_VALUE, \"The value too min, send more ETH\");\n        require(block.timestamp < deploymentTimestamp + lockTimestamp, \"Fund period is closed\");\n\n        fundersToAmount[msg.sender] = msg.value;\n    }\n\n\n    // 取款\n    // 存款资金需要大于目标资金\n    function getFund() external fundPeriodClosed onlyOwner{\n        require(fundersToAmount[address(this)] >= TARGET_VALUE, \"Target is reached\");\n\n        (bool success, ) = payable(msg.sender).call{value: address(this).balance}(\"\");\n\n        require(success, \"Transfer tx failed\");\n\n        fundersToAmount[msg.sender] = 0;\n    }\n\n\n    // 获取ETH的价格\n    function getChainlinkDataFeedLatestAnswer() public view returns(int256){\n        (,int256 answer,,, ) = dataFeed.latestRoundData();\n        return answer;\n    }\n\n    // 存入的ETH价值多少USD\n     function convertEthToUsd(uint256 ethAmount) internal view returns(uint256){\n        uint256 ethPrice = uint256(getChainlinkDataFeedLatestAnswer());\n        return ethAmount * ethPrice / (10 ** 8);\n    }\n\n\n    // 存款周期结束\n    modifier fundPeriodClosed() {\n        require(block.timestamp >= deploymentTimestamp + lockTimestamp, \"Fund period not closed\");\n        _;\n    }\n\n    modifier onlyOwner() {\n        require(msg.sender == owner, \"Not onwer, no permission\");\n        _;\n    }\n\n\n}\n\n\n\n"
+    }
+  },
+  "settings": {
+    "evmVersion": "paris",
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
